@@ -93,9 +93,11 @@
         "registrar"]
 
     async function  scanner(type="ip", variable, cleanse=false) {
+        variable = variable.replace(/^https?:\/\//, '');
         fetch(vtURL+types[type]+"/"+variable,{
         headers:{
-            "X-Apikey": token
+            "mode": "no-cors",
+            "X-Apikey": token,
         }
         }).then(response => {
             response = response.json()
