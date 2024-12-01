@@ -333,9 +333,15 @@
                         rowCell.innerText = whoisSummary
                         rowToBeExported.push(whoisSummary)
                     }else if(ipAttributeFields[i] == "continent"){
-                        rowCell.innerText = element
-                        let getCountryNames = new Intl.DisplayNames(['en'], {type: 'region'});
-                        rowToBeExported.push(getCountryNames.of(element) || 'N\A' + "("+element+")")
+                        if(element == null){
+                            rowCell.innerText = 'N\\A'
+                            let getCountryNames = new Intl.DisplayNames(['en'], {type: 'region'});
+                            rowToBeExported.push("N\\A")  
+                        }else{
+                            rowCell.innerText = element
+                            let getCountryNames = new Intl.DisplayNames(['en'], {type: 'region'});
+                            rowToBeExported.push(getCountryNames.of(element) + "("+element+")")
+                        }
                     }
                     else{
                         rowCell.innerText = element
