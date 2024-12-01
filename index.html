@@ -272,18 +272,24 @@
                         });
                         rowToBeExported.push(groupedExport)
                     }else if(ipAttributeFields[i] == "last_analysis_date"){
-                        
-                        rowCell.innerText = new Date(element * 1000).toJSON()
-                        let todayDate = new Date()
-                        const diffTime = Math.abs(todayDate - new Date(element * 1000));
-                        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
-                        rowCell.innerText += `\n ${diffDays} Days ago`
+                        if(element == null){
+                            rowCell.innerText = 'Never Scanned'
+                            rowToBeExported.push('Never Scanned')
+                            rowToBeExported.push('Never Scanned')
+                        }else{
 
-                        let dateTimeExported = new Date(element * 1000).toJSON()
-                        dateExported = dateTimeExported.split("T")[0]
-                        timeExported = dateTimeExported.split("T")[1].replace("Z","")
-                        rowToBeExported.push(dateExported)
-                        rowToBeExported.push(`'${timeExported}`)
+                            rowCell.innerText = new Date(element * 1000).toJSON()
+                            let todayDate = new Date()
+                            const diffTime = Math.abs(todayDate - new Date(element * 1000));
+                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+                            rowCell.innerText += `\n ${diffDays} Days ago`
+    
+                            let dateTimeExported = new Date(element * 1000).toJSON()
+                            dateExported = dateTimeExported.split("T")[0]
+                            timeExported = dateTimeExported.split("T")[1].replace("Z","")
+                            rowToBeExported.push(dateExported)
+                            rowToBeExported.push(`'${timeExported}`)
+                        }
                     }
                     else if(ipAttributeFields[i] == "reputation"){
                         if(element >0){
@@ -494,18 +500,23 @@
                         });
                         rowToBeExported.push(groupedExport)
                     }else if(domainAttributeFields[i] == "last_analysis_date" || domainAttributeFields[i] == "creation_date" || domainAttributeFields[i] == "last_update_date"){
-                        
-                        rowCell.innerText = new Date(element * 1000).toJSON()
-                        let todayDate = new Date()
-                        const diffTime = Math.abs(todayDate - new Date(element * 1000));
-                        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
-                        rowCell.innerText += `\n ${diffDays} Days ago`
-
-                        let dateTimeExported = new Date(element * 1000).toJSON()
-                        dateExported = dateTimeExported.split("T")[0]
-                        timeExported = dateTimeExported.split("T")[1].replace("Z","")
-                        rowToBeExported.push(dateExported)
-                        rowToBeExported.push(`'${timeExported}`)
+                        if(element == null){
+                            rowCell.innerText = 'Never Scanned'
+                            rowToBeExported.push('Never Scanned')
+                            rowToBeExported.push('Never Scanned')
+                        }else{
+                            rowCell.innerText = new Date(element * 1000).toJSON()
+                            let todayDate = new Date()
+                            const diffTime = Math.abs(todayDate - new Date(element * 1000));
+                            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+                            rowCell.innerText += `\n ${diffDays} Days ago`
+    
+                            let dateTimeExported = new Date(element * 1000).toJSON()
+                            dateExported = dateTimeExported.split("T")[0]
+                            timeExported = dateTimeExported.split("T")[1].replace("Z","")
+                            rowToBeExported.push(dateExported)
+                            rowToBeExported.push(`'${timeExported}`)
+                        }
                     }
                     else if(domainAttributeFields[i] == "reputation"){
                         if(element >0){
