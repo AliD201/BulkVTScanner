@@ -335,7 +335,7 @@
                     }else if(ipAttributeFields[i] == "continent"){
                         rowCell.innerText = element
                         let getCountryNames = new Intl.DisplayNames(['en'], {type: 'region'});
-                        rowToBeExported.push(getCountryNames.of(element) + "("+element+")")
+                        rowToBeExported.push(getCountryNames.of(element) || 'N\A' + "("+element+")")
                     }
                     else{
                         rowCell.innerText = element
