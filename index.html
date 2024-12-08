@@ -44,7 +44,14 @@
     <div class="mx-auto p-4">
         <button id="scanButton" style="width: 100%;" type="button" class="btn btn-primary">Scan</button>
         <button type="button" class="btn btn-secondary w-100 rounded-top mb-1 boxshadow" style="border-radius: 0 0.15rem 0.15rem 0 !important; margin-top: 20px; margin-bottom: 20px;" onclick="exportCSV()">Export as CSV</button>
+    </div>
+    <div class="alert alert-danger" role="alert" id="errors">
+        <p id="ipsText">
 
+        </p>
+        <p id="errorsText">
+
+        </p>
     </div>
     <div id="dataTable" class="mx-auto p-4">
         <table class="table table-dark table-striped table-bordered">
@@ -136,6 +143,11 @@
                 }
                 let row = document.createElement("tr")
                 for (let i = 0; i < ipMainFields.length; i++) {
+                    try {
+                       let test =  response[ipMainFields[i]]
+                    } catch (error) {
+                        continue
+                    }
                     const element = response[ipMainFields[i]];
                     console.log(ipMainFields[i])
                     if(ipMainFields[i] == "id"){
@@ -303,35 +315,40 @@
                     }
                     
                     else if(ipAttributeFields[i] == "whois"){
-                        let whoisText = element.split("\n")
-                        console.log(whoisText);
-                        const resultObject = {};
-                        for (const line of whoisText) {
-                            const [key, value] = line.split(":");
-                            if(value == undefined) continue
-                            console.log(key,"|||",value)
-                            resultObject[key.trim()] = value.trim();
+                        if(element == null){
+                            rowCell.innerText = "No whois info Available"
+                            rowToBeExported.push("No whois info Available")
+                        }else {
+                            let whoisText = element.split("\n")
+                            console.log(whoisText);
+                            const resultObject = {};
+                            for (const line of whoisText) {
+                                const [key, value] = line.split(":");
+                                if(value == undefined) continue
+                                console.log(key,"|||",value)
+                                resultObject[key.trim()] = value.trim();
+                            }
+                            console.log(resultObject)
+                            let whoisSummary = 
+                            "Organization: "+resultObject["Organization"] +"\n"  +
+                            "Admin Organization: "+resultObject["Admin Organization"] +"\n"  +
+                            "Admin Country: " + resultObject["Admin Country"]  +"\n" +
+                            "Admin City: " + resultObject["Admin City"] +"\n" +
+                            "Admin State: " + resultObject["Admin State/Province"] +"\n" +
+                            "Domain Name: " + resultObject["Domain Name"] +"\n" +
+                            "Name Server: " + resultObject["Name Server"] +"\n" +
+                            "Tech Organization: " + resultObject["Tech Organization"] +"\n" +
+                            "Tech Country: " + resultObject["Tech Country"] +"\n" +
+                            "Tech City: " + resultObject["Tech City"] +"\n"
+                            // if(element >0){
+                            //     rowCell.style.color= "green"
+                            // }else if (element <0){
+                            //     rowCell.style.color= "red"
+    
+                            // }
+                            rowCell.innerText = whoisSummary
+                            rowToBeExported.push(whoisSummary)
                         }
-                        console.log(resultObject)
-                        let whoisSummary = 
-                        "Organization: "+resultObject["Organization"] +"\n"  +
-                        "Admin Organization: "+resultObject["Admin Organization"] +"\n"  +
-                        "Admin Country: " + resultObject["Admin Country"]  +"\n" +
-                        "Admin City: " + resultObject["Admin City"] +"\n" +
-                        "Admin State: " + resultObject["Admin State/Province"] +"\n" +
-                        "Domain Name: " + resultObject["Domain Name"] +"\n" +
-                        "Name Server: " + resultObject["Name Server"] +"\n" +
-                        "Tech Organization: " + resultObject["Tech Organization"] +"\n" +
-                        "Tech Country: " + resultObject["Tech Country"] +"\n" +
-                        "Tech City: " + resultObject["Tech City"] +"\n"
-                        // if(element >0){
-                        //     rowCell.style.color= "green"
-                        // }else if (element <0){
-                        //     rowCell.style.color= "red"
-
-                        // }
-                        rowCell.innerText = whoisSummary
-                        rowToBeExported.push(whoisSummary)
                     }else if(ipAttributeFields[i] == "continent"){
                         if(element == null){
                             rowCell.innerText = 'N\\A'
@@ -639,9 +656,16 @@
         ])
         }
         console.log(ipsORdomainsORhashes, type)
+        let errorsIps = document.getElementById("ipsText")
+        let errorsText = document.getElementById("errosText")
         for (let i = 0; i < ipsORdomainsORhashes.length; i++) {
             const element = ipsORdomainsORhashes[i];
-            scanner(type, element)
+            try {
+                scanner(type, element)
+            } catch (error) {
+                errorsIps.innerText += element + '\n'
+                errorsText.innerText += error
+            }
         }
     })
     function exportCSV(){
