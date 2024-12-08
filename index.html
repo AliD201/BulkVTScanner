@@ -15,9 +15,10 @@
         background-color: rgba(33, 37, 41, 1) !important;
         color: white
     }
-        div:has(> p:empty) { 
+    div:has(> p:empty) { 
         display: none;
     }
+
 </style>
 <body>
     <div class="mx-auto p-4 text-center">
@@ -48,13 +49,15 @@
         <button id="scanButton" style="width: 100%;" type="button" class="btn btn-primary">Scan</button>
         <button type="button" class="btn btn-secondary w-100 rounded-top mb-1 boxshadow" style="border-radius: 0 0.15rem 0.15rem 0 !important; margin-top: 20px; margin-bottom: 20px;" onclick="exportCSV()">Export as CSV</button>
     </div>
-    <div class="alert alert-danger" role="alert" id="errors">
-        <p id="ipsText">
-
-        </p>
-        <p id="errorsText">
-
-        </p>
+    <div class="mx-auto p-4">
+        <div class="alert alert-danger" role="alert" id="errors">
+            <p id="ipsText">
+    
+            </p>
+            <p id="errorsText">
+    
+            </p>
+        </div>
     </div>
     <div id="dataTable" class="mx-auto p-4">
         <table class="table table-dark table-striped table-bordered">
@@ -598,7 +601,7 @@
         }
     ).catch((error)=>{
         let errorsIps = document.getElementById("ipsText")
-        let errorsText = document.getElementById("errorsText")
+        let errorsText = document.getElementById("errosText")
         errorsIps.innerText += variable + '\n'
         errorsText.innerText += error
     })
@@ -666,6 +669,8 @@
         console.log(ipsORdomainsORhashes, type)
         let errorsIps = document.getElementById("ipsText")
         let errorsText = document.getElementById("errorsText")
+        errorsIps.innerHTML = ''
+        errorsText.innerHTML = ''
         for (let i = 0; i < ipsORdomainsORhashes.length; i++) {
             const element = ipsORdomainsORhashes[i];
             try {
