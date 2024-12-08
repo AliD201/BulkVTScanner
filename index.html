@@ -117,8 +117,8 @@
         }
         }).then(response => {
             if(!response.ok){
-                console.error(response)
-                throw new Error(`Network response was not ok: ${response}`);
+                console.error(response.status)
+                throw new Error(`Network response was not ok: ${response.status}`);
             }
             response = response.json()
             return response
