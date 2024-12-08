@@ -120,7 +120,8 @@
             return response
         }).then(response => {
             if(!response.ok){
-                throw new Error(`Network response was not ok: ${response.status}`);
+                console.error(response)
+                throw new Error(`Network response was not ok: ${response}`);
             }
             // document.getElementById("dataTable").innerHTML = response.data
             console.log(response.data)
@@ -603,6 +604,7 @@
             }
         }
     ).catch((error)=>{
+        console.error(error)
         let errorsIps = document.getElementById("ipsText")
         let errorsText = document.getElementById("errorsText")
         errorsIps.innerText += variable + '\n'
