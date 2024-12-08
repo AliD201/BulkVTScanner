@@ -116,13 +116,14 @@
             "X-Apikey": token,
         }
         }).then(response => {
-            response = response.json()
-            return response
-        }).then(response => {
             if(!response.ok){
                 console.error(response)
                 throw new Error(`Network response was not ok: ${response}`);
             }
+            response = response.json()
+            return response
+        }).then(response => {
+
             // document.getElementById("dataTable").innerHTML = response.data
             console.log(response.data)
             response = response.data
