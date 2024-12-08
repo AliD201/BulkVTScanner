@@ -15,6 +15,9 @@
         background-color: rgba(33, 37, 41, 1) !important;
         color: white
     }
+        div:has(> p:empty) { 
+        display: none;
+    }
 </style>
 <body>
     <div class="mx-auto p-4 text-center">
@@ -595,7 +598,7 @@
         }
     ).catch((error)=>{
         let errorsIps = document.getElementById("ipsText")
-        let errorsText = document.getElementById("errosText")
+        let errorsText = document.getElementById("errorsText")
         errorsIps.innerText += variable + '\n'
         errorsText.innerText += error
     })
@@ -662,7 +665,7 @@
         }
         console.log(ipsORdomainsORhashes, type)
         let errorsIps = document.getElementById("ipsText")
-        let errorsText = document.getElementById("errosText")
+        let errorsText = document.getElementById("errorsText")
         for (let i = 0; i < ipsORdomainsORhashes.length; i++) {
             const element = ipsORdomainsORhashes[i];
             try {
