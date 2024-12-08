@@ -119,6 +119,9 @@
             response = response.json()
             return response
         }).then(response => {
+            if(!response.ok){
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
             // document.getElementById("dataTable").innerHTML = response.data
             console.log(response.data)
             response = response.data
