@@ -593,10 +593,10 @@
                 
             }
         }
-    ).catch(()=>{
+    ).catch((error)=>{
         let errorsIps = document.getElementById("ipsText")
         let errorsText = document.getElementById("errosText")
-        errorsIps.innerText += element + '\n'
+        errorsIps.innerText += variable + '\n'
         errorsText.innerText += error
     })
         // console.log(response)
