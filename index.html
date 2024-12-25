@@ -693,7 +693,15 @@
         console.log(resultsList)
         resultsList.forEach(row => {
             console.log(row)
-            let formattedRow = row.map(cell => `"${cell.toString().replace(/"/g, '""')}"`);
+            let formattedRow = row.map(cell => {
+                if (typeof cell === "undefined") {
+                    return "";
+                } else if (Array.isArray(cell)) {
+                    return `"${cell.toString().replace(/"/g, '""')}"`;
+                } else {
+                    return `"${cell.toString().replace(/"/g, '""')}"`;
+                }
+            });
             csvContent += formattedRow.join('`') + '\n';
         });
         // console.log(csvContent)
