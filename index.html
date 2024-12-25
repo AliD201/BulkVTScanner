@@ -690,8 +690,9 @@
     function exportCSV(){
         
         let csvContent = 'sep=\`\n'
-
+        console.log(resultsList)
         resultsList.forEach(row => {
+            console.log(row)
             let formattedRow = row.map(cell => `"${cell.toString().replace(/"/g, '""')}"`);
             csvContent += formattedRow.join('`') + '\n';
         });
